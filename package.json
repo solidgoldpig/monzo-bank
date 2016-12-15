@@ -1,0 +1,75 @@
+{
+  "name": "mondo-bank",
+  "version": "0.1.12",
+  "description": "Node wrapper for Mondo API",
+  "main": "lib/mondo.js",
+  "scripts": {
+    "test": "npm run unit-tests",
+    "unit-tests": "jasmine spec/unit/**.unit.spec.js",
+    "integration-tests": "jasmine spec/integration/**.integration.spec.js",
+    "lint": "standard lib/**/*.js && standard bin/**/*.js && standard spec/**/*.js",
+    "lint-files-to-commit": "git diff --name-only --cached --relative | /usr/bin/grep '\\.js$' | xargs standard",
+    "coverage": "istanbul cover jasmine spec/unit/**.unit.spec.js",
+    "flightcheck": "npm run bumptag && npm run docs",
+    "bumptag": "babel-node dev/bumptag.js",
+    "docs": "babel-node dev/generatedocs.js && babel-node dev/generatedocs.js"
+  },
+  "bin": {
+    "mondo": "bin/mondo-cli.js"
+  },
+  "keywords": [
+    "mondo",
+    "banking",
+    "api"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/solidgoldpig/mondo-bank.git#0.1.12"
+  },
+  "bugs": {
+    "url": "https://github.com/solidgoldpig/mondo-bank/issues"
+  },
+  "author": "Alex Robinson <code@alex.solidgoldpig.com> (http://code.solidgoldpig.com/)",
+  "license": "Unlicense",
+  "dependencies": {
+    "lodash": "^3.10.1",
+    "request": "^2.67.0"
+  },
+  "devDependencies": {
+    "babel": "^6.3.13",
+    "babel-cli": "^6.3.13",
+    "babel-preset-es2015": "^6.3.13",
+    "cheerio": "^0.19.0",
+    "eslint": "^1.10.3",
+    "eslint-config-standard": "^4.4.0",
+    "eslint-config-standard-jsdoc": "^0.1.2",
+    "eslint-plugin-jsdoc": "^1.1.0",
+    "eslint-plugin-standard": "^1.3.1",
+    "gulp": "^3.9.0",
+    "gulp-standard": "^5.2.2",
+    "istanbul": "^0.4.1",
+    "jasmine": "^2.4.1",
+    "jsdoc": "^3.4.0",
+    "nock": "^3.3.2",
+    "requizzle": "^0.2.1",
+    "rimraf": "^2.4.4",
+    "standard": "^5.4.1",
+    "tmp": "0.0.28",
+    "to-markdown": "^2.0.1"
+  },
+  "optionalDependencies": {
+    "moment": "^2.10.6",
+    "prompt": "^0.2.14",
+    "yargonaut": "^1.1.2",
+    "yargs": "^3.31.0"
+  },
+  "standard": {
+    "globals": [
+      "expect",
+      "describe",
+      "it",
+      "beforeEach",
+      "afterEach"
+    ]
+  }
+}
