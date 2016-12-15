@@ -3,11 +3,11 @@
 [![npm version](https://badge.fury.io/js/monzo-bank.svg)](https://badge.fury.io/js/monzo-bank)
 [![Build status](https://api.travis-ci.org/solidgoldpig/monzo-bank.svg)](https://travis-ci.org/solidgoldpig/monzo-bank)
 
-Node wrapper for [Monzo](https://getmonzo.co.uk/) API
+Node wrapper for [Monzo](https://monzo.com/) API
 
 All current methods (as of 2 Jan 2016) implemented and can be used as promises or callback-style.
 
-See [https://getmonzo.co.uk/docs](https://getmonzo.co.uk/docs)
+See [https://monzo.com/docs](https://monzo.com/docs)
 
 
 ## Version
@@ -150,7 +150,7 @@ Register a webhook
 
     registerWebhookPromise = monzo.registerWebhook(account_id, url, access_token)
 
-See [https://getmonzo.co.uk/docs/#transaction-created](https://getmonzo.co.uk/docs/#transaction-created) for details of the transaction.created event which is sent to the webhook each time a new transaction is created in a user’s account
+See [https://monzo.com/docs/#transaction-created](https://monzo.com/docs/#transaction-created) for details of the transaction.created event which is sent to the webhook each time a new transaction is created in a user’s account
 
 List webhooks
 
@@ -184,7 +184,7 @@ Deregister attachment
 
 Set the Monzo API host
 
-    monzo.setHost('https://staging-api.getmonzo.co.uk')
+    monzo.setHost('https://staging-api.monzo.com')
 
 
 ## Documentation

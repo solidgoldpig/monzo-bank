@@ -1,5 +1,5 @@
 {
-  "host": "https://api.getmonzo.co.uk",
+  "host": "https://api.monzo.com",
   "resources": {
     "token": "/oauth2/token",
     "tokenInfo": "/ping/whoami",
