@@ -3,7 +3,7 @@
 module.exports = function (wallaby) {
   return {
     files: [{
-      pattern: 'lib/mondo.js',
+      pattern: 'lib/monzo.js',
       load: false
     }, {
       pattern: 'package.json',
@@ -12,7 +12,7 @@ module.exports = function (wallaby) {
       pattern: 'lib/api.values.json',
       load: false
     }, {
-      pattern: 'spec/helper/mondo-unit-spec-helper.js',
+      pattern: 'spec/helper/monzo-unit-spec-helper.js',
       load: false
     }],
     tests: [

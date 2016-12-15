@@ -2,7 +2,7 @@
 
 'use strict'
 
-var mondo = require('../lib/mondo')
+var monzo = require('../lib/monzo')
 var fs = require('fs')
 var path = require('path')
 var moment = require('moment')
@@ -98,7 +98,7 @@ var optionAliases = {
 
 var defaultOptions = {
   config: {
-    description: 'Path where config files are stored - defaults to .mondo-cli.config.json in home directory. Can also be set as mondo-cli.config environment variable',
+    description: 'Path where config files are stored - defaults to .monzo-cli.config.json in home directory. Can also be set as monzo-cli.config environment variable',
     alias: 'c',
     type: 'string'
   },
@@ -119,7 +119,7 @@ var initialArgv = yargs.argv
 
 var isHelp = initialArgv.h || initialArgv.help
 
-var configPath = initialArgv.config || process.env['mondo-cli.config'] || path.resolve(process.env.HOME, '.mondo-cli.config.json')
+var configPath = initialArgv.config || process.env['monzo-cli.config'] || path.resolve(process.env.HOME, '.monzo-cli.config.json')
 
 function writeConfig (config, cb) {
   var wconfig = {}
@@ -212,12 +212,12 @@ try {
 }
 
 if (runCommand) {
-  var mondoSource = fs.readFileSync(path.resolve(__dirname, '..', 'lib/mondo.js'), 'utf8')
+  var monzoSource = fs.readFileSync(path.resolve(__dirname, '..', 'lib/monzo.js'), 'utf8')
   var methodDocs = {}
   var methodRegex = /\/\*\*\s+\*\s*@method\s+(\w+)([\s\S]+?)\*\//
   var skipParams = ['fn']
-  while (mondoSource.match(methodRegex)) {
-    mondoSource = mondoSource.replace(methodRegex, function (m, methodName, methodDetails) {
+  while (monzoSource.match(methodRegex)) {
+    monzoSource = monzoSource.replace(methodRegex, function (m, methodName, methodDetails) {
       var description = methodDetails.replace(/[\s\S]*@description\s*\*\s*(.*)\n[\s\S]*/, function (m, methodDescription) {
         return methodDescription
       })
@@ -317,8 +317,8 @@ if (runCommand) {
         var optionsParams = {}
         var date_usage
         methodDocs[vMethod].params.forEach(function (param) {
-          if (process.env['mondo-cli.' + param.name]) {
-            yargs.default(param.name, process.env['mondo-cli.' + param.name])
+          if (process.env['monzo-cli.' + param.name]) {
+            yargs.default(param.name, process.env['monzo-cli.' + param.name])
           } else if (defaults[param.name] || (defaults[vMethod] && defaults[vMethod][param.name] !== undefined)) {
             yargs.default(param.name, defaults[param.name] !== undefined ? defaults[param.name] : defaults[vMethod][param.name])
           }
@@ -388,7 +388,7 @@ if (runCommand) {
   }
 
   if (method.token) {
-    var tokenPromise = mondo.token({
+    var tokenPromise = monzo.token({
       client_id: argv.client_id,
       client_secret: argv.client_secret,
       username: argv.username,
@@ -398,7 +398,7 @@ if (runCommand) {
   }
 
   if (method.refreshToken) {
-    var refreshTokenPromise = mondo.refreshToken({
+    var refreshTokenPromise = monzo.refreshToken({
       refresh_token: argv.refresh_token,
       client_id: argv.client_id,
       client_secret: argv.client_secret
@@ -407,17 +407,17 @@ if (runCommand) {
   }
 
   if (method.tokenInfo) {
-    var tokenInfoPromise = mondo.tokenInfo(access_token)
+    var tokenInfoPromise = monzo.tokenInfo(access_token)
     runPromise('tokenInfo', tokenInfoPromise)
   }
 
   if (method.accounts) {
-    var accountsPromise = mondo.accounts(access_token)
+    var accountsPromise = monzo.accounts(access_token)
     runPromise('accounts', accountsPromise)
   }
 
   if (method.balance) {
-    var balancePromise = mondo.balance(account_id, access_token)
+    var balancePromise = monzo.balance(account_id, access_token)
     runPromise('balance', balancePromise)
   }
 
@@ -438,12 +438,12 @@ if (runCommand) {
     }
     toISO('since')
     toISO('before')
-    var transactionsPromise = mondo.transactions(args, access_token)
+    var transactionsPromise = monzo.transactions(args, access_token)
     runPromise('transactions', transactionsPromise)
   }
 
   if (method.transaction) {
-    var transactionPromise = mondo.transaction({
+    var transactionPromise = monzo.transaction({
       transaction_id: argv.transaction_id,
       expand: argv.expand
     }, access_token)
@@ -453,7 +453,7 @@ if (runCommand) {
   if (method.annotateTransaction) {
     // should this spanner out if no annotation passed?
     var annotations = argv.metadata || argv.annotation || {}
-    var annotateTransactionPromise = mondo.annotateTransaction(argv.transaction_id, annotations, access_token)
+    var annotateTransactionPromise = monzo.annotateTransaction(argv.transaction_id, annotations, access_token)
     runPromise('annotateTransaction', annotateTransactionPromise)
   }
 
@@ -472,7 +472,7 @@ if (runCommand) {
         argv.params[param] = argv[param]
       }
     })
-    var createFeedItemPromise = mondo.createFeedItem({
+    var createFeedItemPromise = monzo.createFeedItem({
       account_id: account_id,
       params: argv.params,
       url: argv.url
@@ -481,22 +481,22 @@ if (runCommand) {
   }
 
   if (method.registerWebhook) {
-    var registerWebhookPromise = mondo.registerWebhook(account_id, argv.url, access_token)
+    var registerWebhookPromise = monzo.registerWebhook(account_id, argv.url, access_token)
     runPromise('registerWebhook', registerWebhookPromise)
   }
 
   if (method.deleteWebhook) {
-    var deleteWebhookPromise = mondo.deleteWebhook(argv.webhook_id, access_token)
+    var deleteWebhookPromise = monzo.deleteWebhook(argv.webhook_id, access_token)
     runPromise('deleteWebhook', deleteWebhookPromise)
   }
 
   if (method.webhooks) {
-    var webhooksPromise = mondo.webhooks(account_id, access_token)
+    var webhooksPromise = monzo.webhooks(account_id, access_token)
     runPromise('webhooks', webhooksPromise)
   }
 
   if (method.uploadAttachment) {
-    var uploadAttachmentPromise = mondo.uploadAttachment({
+    var uploadAttachmentPromise = monzo.uploadAttachment({
       file: argv.file,
       type: argv.type
     }, access_token)
@@ -504,7 +504,7 @@ if (runCommand) {
   }
 
   if (method.registerAttachment) {
-    var registerAttachmentPromise = mondo.registerAttachment({
+    var registerAttachmentPromise = monzo.registerAttachment({
       transaction_id: argv.transaction_id,
       url: argv.url,
       type: argv.type
@@ -513,7 +513,7 @@ if (runCommand) {
   }
 
   if (method.deregisterAttachment) {
-    var deregisterAttachmentPromise = mondo.deregisterAttachment(argv.attachment_id, access_token)
+    var deregisterAttachmentPromise = monzo.deregisterAttachment(argv.attachment_id, access_token)
     runPromise('deregisterAttachment', deregisterAttachmentPromise)
   }
 }

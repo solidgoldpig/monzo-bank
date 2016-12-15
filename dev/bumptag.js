@@ -7,7 +7,7 @@ let packagePath = path.resolve(__dirname, '..', 'package.json')
 
 let pkg = require(packagePath)
 let version = pkg.version
-console.log('Pre-publishing mondo', version)
+console.log('Pre-publishing monzo', version)
 
 if (!version.includes('-rc')) {
   pkg.repository.url = pkg.repository.url.replace(/#(.*)/, `#${version}`)

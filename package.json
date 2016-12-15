@@ -1,8 +1,8 @@
 {
-  "name": "mondo-bank",
+  "name": "monzo-bank",
   "version": "0.1.12",
-  "description": "Node wrapper for Mondo API",
-  "main": "lib/mondo.js",
+  "description": "Node wrapper for Monzo API",
+  "main": "lib/monzo.js",
   "scripts": {
     "test": "npm run unit-tests",
     "unit-tests": "jasmine spec/unit/**.unit.spec.js",
@@ -15,19 +15,19 @@
     "docs": "babel-node dev/generatedocs.js && babel-node dev/generatedocs.js"
   },
   "bin": {
-    "mondo": "bin/mondo-cli.js"
+    "monzo": "bin/monzo-cli.js"
   },
   "keywords": [
-    "mondo",
+    "monzo",
     "banking",
     "api"
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/solidgoldpig/mondo-bank.git#0.1.12"
+    "url": "git://github.com/solidgoldpig/monzo-bank.git#0.1.12"
   },
   "bugs": {
-    "url": "https://github.com/solidgoldpig/mondo-bank/issues"
+    "url": "https://github.com/solidgoldpig/monzo-bank/issues"
   },
   "author": "Alex Robinson <code@alex.solidgoldpig.com> (http://code.solidgoldpig.com/)",
   "license": "Unlicense",

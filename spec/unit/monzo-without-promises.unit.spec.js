@@ -1,12 +1,12 @@
 'use strict'
 
-var mondo = require('../../lib/mondo')
+var monzo = require('../../lib/monzo')
 var _ = require('lodash')
 
 var nock = require('nock')
 
-var mondoHelper = require('../helper/mondo-unit-spec-helper')
-var mH = mondoHelper
+var monzoHelper = require('../helper/monzo-unit-spec-helper')
+var mH = monzoHelper
 var mondargs = mH.mondargs
 var methodPaths = mondargs.api.resources
 
@@ -14,7 +14,7 @@ var knocker = mH.knocker
 var testSuccess = mH.success
 var testResponseError = mH.responseError
 
-describe('Mondo unit tests', function () {
+describe('Monzo unit tests', function () {
   beforeEach(function () {
     nock.cleanAll()
   })
@@ -48,14 +48,14 @@ describe('Mondo unit tests', function () {
       })
 
       it('should send correct token request when promises are not available', function (done) {
-        mondo.token(mondargs.credentials, testSuccess(done))
+        monzo.token(mondargs.credentials, testSuccess(done))
       })
       it('should send handle token response failure when promises are not available', function (done) {
-        mondo.token(_.extend({}, mondargs.credentials, { client_id: 'invalid' }), testResponseError(done))
+        monzo.token(_.extend({}, mondargs.credentials, { client_id: 'invalid' }), testResponseError(done))
       })
       it('should throw an error when promises are not available if no callback is passed', function (done) {
         try {
-          mondo.token(mondargs.credentials)
+          monzo.token(mondargs.credentials)
         } catch (err) {
           expect(err.message).toEqual('method.missing.callback')
           done()

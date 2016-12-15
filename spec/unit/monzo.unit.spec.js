@@ -1,12 +1,12 @@
 'use strict'
 
-var mondo = require('../../lib/mondo')
+var monzo = require('../../lib/monzo')
 var _ = require('lodash')
 
 var nock = require('nock')
 
-var mondoHelper = require('../helper/mondo-unit-spec-helper')
-var mH = mondoHelper
+var monzoHelper = require('../helper/monzo-unit-spec-helper')
+var mH = monzoHelper
 var mondargs = mH.mondargs
 var methodPaths = mondargs.api.resources
 
@@ -15,7 +15,7 @@ var testSuccess = mH.success
 var testResponseError = mH.responseError
 var testRequestError = mH.requestError
 
-describe('Mondo unit tests', function () {
+describe('Monzo unit tests', function () {
   beforeEach(function () {
     nock.cleanAll()
   })
@@ -49,19 +49,19 @@ describe('Mondo unit tests', function () {
           tokenNock()
         })
         it('should send correct token request', function (done) {
-          mondo.token(mondargs.credentials).then(testSuccess(done))
+          monzo.token(mondargs.credentials).then(testSuccess(done))
         })
         it('should send correct token request when using callback', function (done) {
-          mondo.token(mondargs.credentials, testSuccess(done))
+          monzo.token(mondargs.credentials, testSuccess(done))
         })
         it('should send handle token response failure', function (done) {
-          mondo.token(_.extend({}, mondargs.credentials, { username: 'invalid' })).catch(testResponseError(done))
+          monzo.token(_.extend({}, mondargs.credentials, { username: 'invalid' })).catch(testResponseError(done))
         })
         it('should send handle token response failure when using callback', function (done) {
-          mondo.token(_.extend({}, mondargs.credentials, { client_id: 'invalid' }), testResponseError(done))
+          monzo.token(_.extend({}, mondargs.credentials, { client_id: 'invalid' }), testResponseError(done))
         })
         it('should send handle request failure', function (done) {
-          mondo.token({ unhandled: 'invalid' }).catch(testRequestError(done))
+          monzo.token({ unhandled: 'invalid' }).catch(testRequestError(done))
         })
       })
 
@@ -80,16 +80,16 @@ describe('Mondo unit tests', function () {
           tokenInfoNock()
         })
         it('should send correct tokenInfo request', function (done) {
-          mondo.tokenInfo(mondargs.access_token).then(testSuccess(done))
+          monzo.tokenInfo(mondargs.access_token).then(testSuccess(done))
         })
         it('should send correct tokenInfo request when using callback', function (done) {
-          mondo.tokenInfo(mondargs.access_token, testSuccess(done))
+          monzo.tokenInfo(mondargs.access_token, testSuccess(done))
         })
         it('should send handle tokenInfo request failure', function (done) {
-          mondo.tokenInfo('invalid_token').catch(testResponseError(done))
+          monzo.tokenInfo('invalid_token').catch(testResponseError(done))
         })
         it('should send handle tokenInfo request failure when using callback', function (done) {
-          mondo.tokenInfo('invalid_token', testResponseError(done))
+          monzo.tokenInfo('invalid_token', testResponseError(done))
         })
       })
 
@@ -117,20 +117,20 @@ describe('Mondo unit tests', function () {
           refreshTokenNock()
         })
         it('should send correct refreshToken request', function (done) {
-          mondo.refreshToken({
+          monzo.refreshToken({
             refresh_token: mondargs.refresh_token,
             client_id: mondargs.credentials.client_id,
             client_secret: mondargs.credentials.client_secret
           }).then(testSuccess(done))
         })
         it('should send correct tokenInfo request when using callback', function (done) {
-          mondo.refreshToken(mondargs.refresh_token, testSuccess(done))
+          monzo.refreshToken(mondargs.refresh_token, testSuccess(done))
         })
         it('should send handle tokenInfo request failure', function (done) {
-          mondo.refreshToken('invalid_token').catch(testResponseError(done))
+          monzo.refreshToken('invalid_token').catch(testResponseError(done))
         })
         it('should send handle tokenInfo request failure when using callback', function (done) {
-          mondo.refreshToken('invalid_token', testResponseError(done))
+          monzo.refreshToken('invalid_token', testResponseError(done))
         })
       })
     })
@@ -143,10 +143,10 @@ describe('Mondo unit tests', function () {
         accountsNock()
       })
       it('should send correct accounts request', function (done) {
-        mondo.accounts(mondargs.access_token).then(testSuccess(done))
+        monzo.accounts(mondargs.access_token).then(testSuccess(done))
       })
       it('should send correct accounts request when using callback', function (done) {
-        mondo.accounts(mondargs.access_token, testSuccess(done))
+        monzo.accounts(mondargs.access_token, testSuccess(done))
       })
     })
 
@@ -167,16 +167,16 @@ describe('Mondo unit tests', function () {
         balanceNock()
       })
       it('should send correct balance request', function (done) {
-        mondo.balance(mondargs.account_id, mondargs.access_token).then(testSuccess(done))
+        monzo.balance(mondargs.account_id, mondargs.access_token).then(testSuccess(done))
       })
       it('should send correct balance request when using callback', function (done) {
-        mondo.balance(mondargs.account_id, mondargs.access_token, testSuccess(done))
+        monzo.balance(mondargs.account_id, mondargs.access_token, testSuccess(done))
       })
       it('should send handle balance request failure', function (done) {
-        mondo.balance('invalid_account', mondargs.access_token).catch(testResponseError(done))
+        monzo.balance('invalid_account', mondargs.access_token).catch(testResponseError(done))
       })
       it('should send handle balance request failure when using callback', function (done) {
-        mondo.balance('invalid_account', mondargs.access_token, testResponseError(done))
+        monzo.balance('invalid_account', mondargs.access_token, testResponseError(done))
       })
     })
 
@@ -201,31 +201,31 @@ describe('Mondo unit tests', function () {
         transactionsNock()
       })
       it('should send correct transactions request', function (done) {
-        mondo.transactions(mondargs.account_id, mondargs.access_token).then(testSuccess(done))
+        monzo.transactions(mondargs.account_id, mondargs.access_token).then(testSuccess(done))
       })
       it('should send correct transactions request when using callback', function (done) {
-        mondo.transactions(mondargs.account_id, mondargs.access_token, testSuccess(done))
+        monzo.transactions(mondargs.account_id, mondargs.access_token, testSuccess(done))
       })
       it('should send correct transactions request with limit', function (done) {
-        mondo.transactions({
+        monzo.transactions({
           account_id: mondargs.account_id,
           limit: 10
         }, mondargs.access_token).then(testSuccess(done))
       })
       it('should send correct transactions request with ISO date string', function (done) {
-        mondo.transactions({
+        monzo.transactions({
           account_id: mondargs.account_id,
           since: '2015-11-10T23:00:00Z'
         }, mondargs.access_token).then(testSuccess(done))
       })
       it('should send correct transactions request with date object', function (done) {
-        mondo.transactions({
+        monzo.transactions({
           account_id: mondargs.account_id,
           before: new Date()
         }, mondargs.access_token).then(testSuccess(done))
       })
       it('should send correct transactions request when expand param passed', function (done) {
-        mondo.transactions({
+        monzo.transactions({
           account_id: mondargs.account_id,
           expand: 'merchant'
         }, mondargs.access_token).then(testSuccess(done))
@@ -250,18 +250,18 @@ describe('Mondo unit tests', function () {
         transactionNock()
       })
       it('should send correct transaction request', function (done) {
-        mondo.transaction(mondargs.transaction_id, mondargs.access_token).then(testSuccess(done))
+        monzo.transaction(mondargs.transaction_id, mondargs.access_token).then(testSuccess(done))
       })
       it('should send correct transaction request when using callback', function (done) {
-        mondo.transaction(mondargs.transaction_id, mondargs.access_token, testSuccess(done))
+        monzo.transaction(mondargs.transaction_id, mondargs.access_token, testSuccess(done))
       })
       it('should send correct transaction request when sent as object', function (done) {
-        mondo.transaction({
+        monzo.transaction({
           transaction_id: mondargs.transaction_id
         }, mondargs.access_token, testSuccess(done))
       })
       it('should send correct transaction request when expand param passed', function (done) {
-        mondo.transaction({
+        monzo.transaction({
           transaction_id: mondargs.transaction_id,
           expand: 'merchant'
         }, mondargs.access_token, testSuccess(done))
@@ -282,22 +282,22 @@ describe('Mondo unit tests', function () {
         annotateTransactionNock()
       })
       it('should send correct annotateTransaction request', function (done) {
-        mondo.annotateTransaction(mondargs.transaction_id, metadata, mondargs.access_token).then(testSuccess(done))
+        monzo.annotateTransaction(mondargs.transaction_id, metadata, mondargs.access_token).then(testSuccess(done))
       })
       it('should send correct annotateTransaction request when using callback', function (done) {
-        mondo.annotateTransaction(mondargs.transaction_id, metadata, mondargs.access_token, testSuccess(done))
+        monzo.annotateTransaction(mondargs.transaction_id, metadata, mondargs.access_token, testSuccess(done))
       })
       it('should send correct annotateTransaction request when sent as object', function (done) {
-        mondo.annotateTransaction(_.extend({transaction_id: mondargs.transaction_id}, metadata), mondargs.access_token, testSuccess(done))
+        monzo.annotateTransaction(_.extend({transaction_id: mondargs.transaction_id}, metadata), mondargs.access_token, testSuccess(done))
       })
       it('should send correct annotateTransaction request when sent as nested object', function (done) {
-        mondo.annotateTransaction({
+        monzo.annotateTransaction({
           transaction_id: mondargs.transaction_id,
           metadata: metadata
         }, mondargs.access_token, testSuccess(done))
       })
       it('should send correct annotateTransaction request when metadata aliased as annotation', function (done) {
-        mondo.annotateTransaction({
+        monzo.annotateTransaction({
           transaction_id: mondargs.transaction_id,
           annotation: metadata
         }, mondargs.access_token, testSuccess(done))
@@ -330,10 +330,10 @@ describe('Mondo unit tests', function () {
         createFeedItemNock()
       })
       it('should send correct createFeedItem request', function (done) {
-        mondo.createFeedItem(params, mondargs.access_token).then(testSuccess(done))
+        monzo.createFeedItem(params, mondargs.access_token).then(testSuccess(done))
       })
       it('should send correct createFeedItem request when using callback', function (done) {
-        mondo.createFeedItem(params, mondargs.access_token, testSuccess(done))
+        monzo.createFeedItem(params, mondargs.access_token, testSuccess(done))
       })
     })
 
@@ -349,10 +349,10 @@ describe('Mondo unit tests', function () {
         webhooksNock()
       })
       it('should send correct webhooks request', function (done) {
-        mondo.webhooks(mondargs.account_id, mondargs.access_token).then(testSuccess(done))
+        monzo.webhooks(mondargs.account_id, mondargs.access_token).then(testSuccess(done))
       })
       it('should send correct webhooks request when using callback', function (done) {
-        mondo.webhooks(mondargs.account_id, mondargs.access_token, testSuccess(done))
+        monzo.webhooks(mondargs.account_id, mondargs.access_token, testSuccess(done))
       })
     })
 
@@ -372,10 +372,10 @@ describe('Mondo unit tests', function () {
         registerWebhookNock()
       })
       it('should send correct registerWebhook request', function (done) {
-        mondo.registerWebhook(mondargs.account_id, webhookUrl, mondargs.access_token).then(testSuccess(done))
+        monzo.registerWebhook(mondargs.account_id, webhookUrl, mondargs.access_token).then(testSuccess(done))
       })
       it('should send correct registerWebhook request when using callback', function (done) {
-        mondo.registerWebhook(mondargs.account_id, webhookUrl, mondargs.access_token, testSuccess(done))
+        monzo.registerWebhook(mondargs.account_id, webhookUrl, mondargs.access_token, testSuccess(done))
       })
     })
 
@@ -392,10 +392,10 @@ describe('Mondo unit tests', function () {
         deleteWebhookNock()
       })
       it('should send correct deleteWebhook request', function (done) {
-        mondo.deleteWebhook(webhook_id, mondargs.access_token).then(testSuccess(done))
+        monzo.deleteWebhook(webhook_id, mondargs.access_token).then(testSuccess(done))
       })
       it('should send correct deleteWebhook request when using callback', function (done) {
-        mondo.deleteWebhook(webhook_id, mondargs.access_token, testSuccess(done))
+        monzo.deleteWebhook(webhook_id, mondargs.access_token, testSuccess(done))
       })
     })
 
@@ -418,13 +418,13 @@ describe('Mondo unit tests', function () {
         registerAttachmentNock()
       })
       it('should send correct registerAttachment request', function (done) {
-        mondo.registerAttachment(params, mondargs.access_token).then(testSuccess(done))
+        monzo.registerAttachment(params, mondargs.access_token).then(testSuccess(done))
       })
       it('should send correct registerAttachment request when using callback', function (done) {
-        mondo.registerAttachment(params, mondargs.access_token, testSuccess(done))
+        monzo.registerAttachment(params, mondargs.access_token, testSuccess(done))
       })
       it('should send correct registerAttachment request when params aliases used', function (done) {
-        mondo.registerAttachment({
+        monzo.registerAttachment({
           transaction_id: mondargs.transaction_id,
           url: file_url,
           type: file_type
@@ -450,19 +450,19 @@ describe('Mondo unit tests', function () {
         uploadAttachmentNock()
       })
       it('should send correct uploadAttachment request', function (done) {
-        mondo.uploadAttachment(params, mondargs.access_token).then(testSuccess(done))
+        monzo.uploadAttachment(params, mondargs.access_token).then(testSuccess(done))
       })
       it('should send correct uploadAttachment request when using callback', function (done) {
-        mondo.uploadAttachment(params, mondargs.access_token, testSuccess(done))
+        monzo.uploadAttachment(params, mondargs.access_token, testSuccess(done))
       })
       it('should send correct uploadAttachment request when params aliases used', function (done) {
-        mondo.uploadAttachment({
+        monzo.uploadAttachment({
           file_name: file_name,
           type: file_type
         }, mondargs.access_token, testSuccess(done))
       })
       it('should send correct uploadAttachment request when other params aliases used', function (done) {
-        mondo.uploadAttachment({
+        monzo.uploadAttachment({
           name: file_name,
           file_type: file_type
         }, mondargs.access_token, testSuccess(done))
@@ -484,10 +484,10 @@ describe('Mondo unit tests', function () {
         deregisterAttachmentNock()
       })
       it('should send correct deregisterAttachment request', function (done) {
-        mondo.deregisterAttachment(attachment_id, mondargs.access_token).then(testSuccess(done))
+        monzo.deregisterAttachment(attachment_id, mondargs.access_token).then(testSuccess(done))
       })
       it('should send correct deregisterAttachment request when using callback', function (done) {
-        mondo.deregisterAttachment(attachment_id, mondargs.access_token, testSuccess(done))
+        monzo.deregisterAttachment(attachment_id, mondargs.access_token, testSuccess(done))
       })
     })
 
@@ -502,8 +502,8 @@ describe('Mondo unit tests', function () {
         setHostNock()
       })
       it('should send correct accounts request', function (done) {
-        mondo.setHost('http://localhost:9090')
-        mondo.accounts(mondargs.access_token).then(testSuccess(done))
+        monzo.setHost('http://localhost:9090')
+        monzo.accounts(mondargs.access_token).then(testSuccess(done))
       })
     })
   }

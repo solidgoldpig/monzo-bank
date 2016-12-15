@@ -1,7 +1,7 @@
 .vscode
 .coverage/
 coverage/
-.mondo-cli.config.json
-.mondo-cli-config
+.monzo-cli.config.json
+.monzo-cli-config
 docs/
 typings/

@@ -1,13 +1,13 @@
-# mondo-bank
+# monzo-bank
 
-[![npm version](https://badge.fury.io/js/mondo-bank.svg)](https://badge.fury.io/js/mondo-bank)
-[![Build status](https://api.travis-ci.org/solidgoldpig/mondo-bank.svg)](https://travis-ci.org/solidgoldpig/mondo-bank)
+[![npm version](https://badge.fury.io/js/monzo-bank.svg)](https://badge.fury.io/js/monzo-bank)
+[![Build status](https://api.travis-ci.org/solidgoldpig/monzo-bank.svg)](https://travis-ci.org/solidgoldpig/monzo-bank)
 
-Node wrapper for [Mondo](https://getmondo.co.uk/) API
+Node wrapper for [Monzo](https://getmonzo.co.uk/) API
 
 All current methods (as of 2 Jan 2016) implemented and can be used as promises or callback-style.
 
-See [https://getmondo.co.uk/docs](https://getmondo.co.uk/docs)
+See [https://getmonzo.co.uk/docs](https://getmonzo.co.uk/docs)
 
 
 ## Version
@@ -17,26 +17,26 @@ See [https://getmondo.co.uk/docs](https://getmondo.co.uk/docs)
 
 ## Installation
 
-    npm install mondo-bank
+    npm install monzo-bank
 
 Install globally, along with bundled command line tool
 
-    npm install -g mondo-bank
+    npm install -g monzo-bank
 
 If you do not wish to install the provided command line tool, you can skip the optional dependencies
 
-    npm install -g mondo-bank --no-bin-links --no-optional 
+    npm install -g monzo-bank --no-bin-links --no-optional 
 
 
 ## Usage
 
-    mondo = require('mondo-bank')
+    monzo = require('monzo-bank')
 
 All methods return a promise but can optionally be called with a callback function as the final argument
 
 #### Promise style
 
-    methodPromise = mondo[$method]([$params])
+    methodPromise = monzo[$method]([$params])
     methodPromise
        .then(function(value){
          ...
@@ -47,7 +47,7 @@ All methods return a promise but can optionally be called with a callback functi
 
 #### Callback style
 
-    mondo[method]([$params], function(err, value){
+    monzo[method]([$params], function(err, value){
       if (err) {
        ...
       }
@@ -58,7 +58,7 @@ All methods return a promise but can optionally be called with a callback functi
 
 Acquire an access token
 
-    tokenPromise = mondo.token({
+    tokenPromise = monzo.token({
       client_id: client_id,
       client_secret: client_secret,
       username: username,
@@ -67,15 +67,15 @@ Acquire an access token
 
 Get information about an access token
 
-    tokenInfoPromise = mondo.tokenInfo(accessToken)
+    tokenInfoPromise = monzo.tokenInfo(accessToken)
 
 Refresh a proviously acquired token
 
-    refreshTokenPromise = mondo.refreshToken(refreshToken)
+    refreshTokenPromise = monzo.refreshToken(refreshToken)
 
 or if the client id and secret have not been previously passed
 
-    refreshTokenPromise = mondo.refreshToken({
+    refreshTokenPromise = monzo.refreshToken({
       refreshToken: refreshToken,
       client_id: client_id,
       client_secret: client_secret
@@ -83,19 +83,19 @@ or if the client id and secret have not been previously passed
 
 Get detailed information about customer’s accounts
 
-    accountsPromise = mondo.accounts(accessToken)
+    accountsPromise = monzo.accounts(accessToken)
 
 Get balance details for an account
 
-    balancePromise = mondo.balance(account_id, access_token)
+    balancePromise = monzo.balance(account_id, access_token)
 
 List transactions
 
-    transactionsPromise = mondo.transactions(account_id, access_token)
+    transactionsPromise = monzo.transactions(account_id, access_token)
 
 or to filter the results
 
-    transactionsPromise = mondo.transactions({
+    transactionsPromise = monzo.transactions({
       account_id: account_id,
       since: since,
       before: before
@@ -104,31 +104,31 @@ or to filter the results
 
 Get details about a transaction
 
-    transactionPromise = mondo.transaction(transaction_id, access_token)
+    transactionPromise = monzo.transaction(transaction_id, access_token)
 
 or to see expanded info for the merchant
 
-    transactionPromise = mondo.transaction({
+    transactionPromise = monzo.transaction({
       transaction_id: transaction_id,
       expand: 'merchant'
     }, access_token)
 
 Annotate a transaction
 
-    annotateTransactionPromise = mondo.annotateTransaction(transaction_id, {
+    annotateTransactionPromise = monzo.annotateTransaction(transaction_id, {
       foo: 'bar'
     }, access_token)
 
 or
 
-    annotateTransactionPromise = mondo.annotateTransaction({
+    annotateTransactionPromise = monzo.annotateTransaction({
       transaction_id: transaction_id,
       foo: 'bar'
     }, access_token)
 
 or
 
-    annotateTransactionPromise = mondo.annotateTransaction({
+    annotateTransactionPromise = monzo.annotateTransaction({
       transaction_id: transaction_id,
       metadata: {
        foo: 'bar'
@@ -137,7 +137,7 @@ or
 
 Publish a new feed entry
 
-    createFeedItemPromise = mondo.createFeedItem({
+    createFeedItemPromise = monzo.createFeedItem({
       account_id: accountId,
       params: {
         title: title,
@@ -148,21 +148,21 @@ Publish a new feed entry
 
 Register a webhook
 
-    registerWebhookPromise = mondo.registerWebhook(account_id, url, access_token)
+    registerWebhookPromise = monzo.registerWebhook(account_id, url, access_token)
 
-See [https://getmondo.co.uk/docs/#transaction-created](https://getmondo.co.uk/docs/#transaction-created) for details of the transaction.created event which is sent to the webhook each time a new transaction is created in a user’s account
+See [https://getmonzo.co.uk/docs/#transaction-created](https://getmonzo.co.uk/docs/#transaction-created) for details of the transaction.created event which is sent to the webhook each time a new transaction is created in a user’s account
 
 List webhooks
 
-    webhooksPromise = mondo.webhooks(account_id, access_token)
+    webhooksPromise = monzo.webhooks(account_id, access_token)
 
 Delete webhook
 
-    deleteWebhookPromise = mondo.deleteWebhook(webhook_id, access_token)
+    deleteWebhookPromise = monzo.deleteWebhook(webhook_id, access_token)
 
 Register attachment
 
-    registerAttachmentPromise = mondo.registerAttachment({
+    registerAttachmentPromise = monzo.registerAttachment({
       external_id: transaction_id,
       file_type: file_type,
       file_url: file_url
@@ -170,21 +170,21 @@ Register attachment
 
 Request upload attachment url
 
-    uploadAttachmentPromise = mondo.uploadAttachment({
+    uploadAttachmentPromise = monzo.uploadAttachment({
       file_name: file_name,
       file_type: file_type
     }, access_token)
 
 Deregister attachment
 
-    deregisterAttachmentPromise = mondo.deregisterAttachment(attachment_id, access_token)
+    deregisterAttachmentPromise = monzo.deregisterAttachment(attachment_id, access_token)
 
 
 ## Dev mode
 
-Set the Mondo API host
+Set the Monzo API host
 
-    mondo.setHost('https://staging-api.getmondo.co.uk')
+    monzo.setHost('https://staging-api.getmonzo.co.uk')
 
 
 ## Documentation
@@ -196,9 +196,9 @@ This generates documentation with jsdoc in the docs directory (ignored by git) a
 
 ## Command line script
 
-If `mondo-bank` is installed with the global `-g` flag, the CLI script `mondo` will be available.
+If `monzo-bank` is installed with the global `-g` flag, the CLI script `monzo` will be available.
 
-Otherwise, ensure that `bin/mondo-cli.js` is in your path.
+Otherwise, ensure that `bin/monzo-cli.js` is in your path.
 
 ### CLI usage
 
@@ -215,16 +215,16 @@ All methods are supported as commands of the CLI script.
 
 Please refer to the built-in documentation for further details.
 
-    mondo --help
+    monzo --help
 
 ### Bash completion
 
-Programmable completions are provided for commands and options by the `mondo.completions.bash` file in the module’s bin directory. Either source the file directly or copy it to wherever your system looks for completion files.
+Programmable completions are provided for commands and options by the `monzo.completions.bash` file in the module’s bin directory. Either source the file directly or copy it to wherever your system looks for completion files.
 
 ### CLI config files
 
-By default, the `mondo` cli tool looks for its config file (`mondo-cli.config.json`) in the user’s home directory.
+By default, the `monzo` cli tool looks for its config file (`monzo-cli.config.json`) in the user’s home directory.
 
-To override this, pass the config option or set the `mondo-cli.config` environment variable.
+To override this, pass the config option or set the `monzo-cli.config` environment variable.
 
 The config file stores developer and user details, app tokens and any default values for command options.

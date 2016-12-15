@@ -9,27 +9,27 @@ import cheerio from 'cheerio'
 import toMarkdown from 'to-markdown'
 
 let packagePath = path.resolve(__dirname, '..', 'package.json')
-let inputPath = './lib/mondo.js'
+let inputPath = './lib/monzo.js'
 let tmpPath = tmp.dirSync().name
-let tmpDocPath = path.resolve(tmpPath, 'mondo.js')
+let tmpDocPath = path.resolve(tmpPath, 'monzo.js')
 // let tmpReadme = path.resolve(tmpPath, 'README.md')
 let jsdocConf = './dev/jsdoc.conf.json'
 let readmePath = './README.md'
 let readmeTemplate = './dev/README.md.tmpl'
 let docsPath = path.resolve(__dirname, '..', 'docs')
-let outputFiles = ['module-mondo-bank.html', 'mondo.js.html']
+let outputFiles = ['module-monzo-bank.html', 'monzo.js.html']
 let readmeMethodsFile = outputFiles[0]
 
 let pkg = require(packagePath)
 let version = pkg.version
-console.log('Generating docs for mondo', version)
+console.log('Generating docs for monzo', version)
 
-let mondoContents = fs.readFileSync(inputPath, 'utf-8')
+let monzoContents = fs.readFileSync(inputPath, 'utf-8')
 
 let charRange = [65, 91]
 let charCount = charRange[0] - 1
 
-mondoContents = mondoContents
+monzoContents = monzoContents
   .replace(/See (https*:\/\/\S+)/g, 'See [$1]($1)')
   .replace(/@method /g, function () {
     charCount++
@@ -41,7 +41,7 @@ mondoContents = mondoContents
     return `@method ${String.fromCharCode(charCount)}___`
   })
 
-fs.writeFileSync(tmpDocPath, mondoContents)
+fs.writeFileSync(tmpDocPath, monzoContents)
 console.log('Created temporary files for jsdoc')
 
 rimraf.sync(docsPath)
@@ -53,9 +53,9 @@ console.log('Generated docs')
 
 outputFiles.forEach(function (outputFile) {
   let outputPath = path.resolve(docsPath, outputFile)
-  let mondoOutput = fs.readFileSync(outputPath, 'utf-8')
-  mondoOutput = mondoOutput.replace(/\w+___/g, '')
-  fs.writeFileSync(outputPath, mondoOutput)
+  let monzoOutput = fs.readFileSync(outputPath, 'utf-8')
+  monzoOutput = monzoOutput.replace(/\w+___/g, '')
+  fs.writeFileSync(outputPath, monzoOutput)
 })
 console.log('Post-processed docs output')
 
