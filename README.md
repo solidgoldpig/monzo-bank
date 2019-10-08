@@ -25,7 +25,7 @@ Install globally, along with bundled command line tool
 
 If you do not wish to install the provided command line tool, you can skip the optional dependencies
 
-    npm install -g monzo-bank --no-bin-links --no-optional 
+    npm install -g monzo-bank --no-bin-links --no-optional
 
 
 ## Usage
@@ -134,6 +134,10 @@ or
        foo: 'bar'
       }
     }, access_token)
+
+List pots
+
+    potsPromise = monzo.pots(access_token)
 
 Publish a new feed entry
 

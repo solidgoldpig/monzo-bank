@@ -180,6 +180,21 @@ describe('Monzo unit tests', function () {
       })
     })
 
+    describe('Pots', function () {
+      function potsNock () {
+        knocker({ url: methodPaths.pots })
+      }
+      beforeEach(function () {
+        potsNock()
+      })
+      it('should send correct pots request', function (done) {
+        monzo.pots(mondargs.access_token).then(testSuccess(done))
+      })
+      it('should send correct pots request when using callback', function (done) {
+        monzo.pots(mondargs.access_token, testSuccess(done))
+      })
+    })
+
     describe('Transactions', function () {
       var url = methodPaths.transactions
       function transactionsNock () {
