@@ -137,7 +137,7 @@ or
 
 List pots
 
-    potsPromise = monzo.pots(access_token)
+    potsPromise = monzo.pots(account_id, access_token)
 
 Publish a new feed entry
 
