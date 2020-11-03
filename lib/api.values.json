@@ -6,6 +6,7 @@
     "refreshToken": "/oauth2/token",
     "accounts": "/accounts",
     "balance": "/balance",
+    "pots": "/pots",
     "transactions": "/transactions",
     "transaction": "/transactions/",
     "annotateTransaction": "/transactions/",

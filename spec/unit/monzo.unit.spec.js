@@ -180,6 +180,36 @@ describe('Monzo unit tests', function () {
       })
     })
 
+    describe('Pots', function () {
+      function potsNock () {
+        var url = methodPaths.pots
+        knocker({
+          url: url,
+          query: { current_account_id: mondargs.account_id }
+        })
+        knocker({
+          code: 403,
+          url: url,
+          query: { current_account_id: 'invalid_account' }
+        })
+      }
+      beforeEach(function () {
+        potsNock()
+      })
+      it('should send correct pots request', function (done) {
+        monzo.pots(mondargs.account_id, mondargs.access_token).then(testSuccess(done))
+      })
+      it('should send correct pots request when using callback', function (done) {
+        monzo.pots(mondargs.account_id, mondargs.access_token, testSuccess(done))
+      })
+      it('should handle pots request failure', function (done) {
+        monzo.balance('invalid_account', mondargs.access_token).catch(testResponseError(done))
+      })
+      it('should handle pots request failure when using callback', function (done) {
+        monzo.balance('invalid_account', mondargs.access_token, testResponseError(done))
+      })
+    })
+
     describe('Transactions', function () {
       var url = methodPaths.transactions
       function transactionsNock () {
